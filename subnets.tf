@@ -1,19 +1,6 @@
-
 //subnets.tf
-resource "aws_route_table" "route-table-dmogiliver-env" {
+resource "aws_subnet" "subnet-one" {
+  cidr_block = "${cidrsubnet(aws_vpc.dmogiliver-env.cidr_block, 3, 1)}"
   vpc_id = "${aws_vpc.dmogiliver-env.id}"
-
-route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = "${aws_internet_gateway.dmogiliver-env-gw.id}"
-  }
-
-tags {
-    Name = "dmogiliver-env-route-table"
-  }
-}
-
-resource "aws_route_table_association" "subnet-association" {
-  subnet_id      = "${aws_subnet.subnet-one.id}"
-  route_table_id = "${aws_route_table.route-table-dmogiliver-env.id}"
+  availability_zone = "us-west-2a"
 }
